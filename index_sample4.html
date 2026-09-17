@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="김한재 게임 프로그래머 포트폴리오">
+  <title>김한재 | Game Programmer</title>
+  <style>
+    :root {
+      --bg: #0d1722;
+      --panel: #172536;
+      --panel-soft: #12202e;
+      --line: rgba(196, 219, 234, .13);
+      --text: #f5f7f8;
+      --muted: #9eafbd;
+      --quiet: #738595;
+      --mint: #64e6bc;
+      --blue: #7ab9ff;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y proximity;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 78% 3%, rgba(73, 126, 153, .15), transparent 28rem),
+        var(--bg);
+      font-family: Pretendard, "Noto Sans KR", Arial, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    .page-section {
+      min-height: 100svh;
+      padding: 72px 76px 84px;
+      display: flex;
+      align-items: center;
+      scroll-snap-align: start;
+      scroll-margin-top: 20px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page-section::before {
+      content: attr(data-index);
+      position: absolute;
+      top: 34px;
+      left: 76px;
+      color: rgba(100, 230, 188, .8);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+
+    .page-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.5), transparent 72%);
+    }
+
+    .section-inner { width: min(100%, var(--max-width)); margin: 0 auto; }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--mint);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.18; letter-spacing: -.045em; }
+    h1 { max-width: 760px; margin-bottom: 28px; font-size: clamp(2.85rem, 5.4vw, 5.65rem); }
+    h2 { margin-bottom: 24px; font-size: clamp(2.05rem, 3.9vw, 3.7rem); }
+    h3 { margin-bottom: 12px; font-size: 1.17rem; }
+
+    .mint { color: var(--mint); }
+    .muted { color: var(--muted); }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(290px, .65fr);
+      align-items: end;
+      gap: 76px;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .profile-card, .info-card, .project-card, .solution-card {
+      background: linear-gradient(145deg, rgba(29, 49, 68, .96), rgba(16, 31, 45, .96));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.18);
+    }
+
+    .profile-card { padding: 27px; }
+    .card-label { margin-bottom: 23px; color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+    .profile-card h3 { font-size: 1.42rem; }
+    .profile-card .role { color: var(--blue); font-size: .92rem; }
+    .facts { display: grid; gap: 11px; margin: 28px 0; padding-top: 20px; border-top: 1px solid var(--line); }
+    .fact { display: grid; grid-template-columns: 84px 1fr; gap: 8px; font-size: .82rem; }
+    .fact dt { color: var(--quiet); text-transform: uppercase; }
+    .fact dd { margin: 0; color: var(--muted); }
+
+    .link-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .link-row a, .tag { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border: 1px solid rgba(122,185,255,.2); border-radius: 999px; color: var(--blue); font-size: .75rem; text-decoration: none; }
+    .link-row a:hover { border-color: var(--blue); background: rgba(122,185,255,.08); }
+
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 38px; }
+    .section-heading p { max-width: 360px; margin-bottom: 7px; color: var(--muted); font-size: .92rem; }
+
+    .growth-grid, .projects-grid, .solutions-grid { display: grid; gap: 14px; }
+    .growth-grid { grid-template-columns: repeat(3, 1fr); }
+    .info-card { min-height: 226px; padding: 25px; }
+    .index { display: block; margin-bottom: 28px; color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+    .info-card p, .project-card p, .solution-card p { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+
+    .career-block { margin-top: 20px; padding: 25px 28px; border-left: 2px solid var(--mint); background: rgba(23,37,54,.62); }
+    .career-block h3 { display: flex; justify-content: space-between; gap: 20px; font-size: 1.25rem; }
+    .career-block h3 span { color: var(--quiet); font-size: .75rem; font-weight: 400; letter-spacing: .08em; }
+    .career-block p { max-width: 780px; margin: 0; color: var(--muted); font-size: .9rem; }
+    .career-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .tag { padding: 5px 9px; color: var(--muted); border-color: var(--line); }
+
+    .projects-grid { grid-template-columns: repeat(3, 1fr); }
+    .project-card { min-height: 276px; padding: 26px; display: flex; flex-direction: column; }
+    .project-card .project-top { display: flex; justify-content: space-between; align-items: start; gap: 14px; margin-bottom: 20px; }
+    .project-card .period { color: var(--quiet); font-size: .76rem; white-space: nowrap; }
+    .project-card .stack { margin-top: auto; padding-top: 20px; color: var(--mint); font-size: .77rem; }
+    .project-card .link-row { margin-top: 18px; }
+    .project-card .link-row a { font-size: .7rem; }
+
+    .solutions-grid { grid-template-columns: repeat(2, 1fr); }
+    .solution-card { min-height: 220px; padding: 28px; }
+    .solution-card .solution-number { display: block; margin-bottom: 24px; color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+    .solution-card code { color: var(--mint); font-family: Consolas, monospace; font-size: .82em; }
+
+    .future-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; }
+    .future-copy { max-width: 700px; }
+    .future-copy p { color: var(--muted); }
+    .future-copy .closing { margin-top: 32px; color: var(--text); font-size: 1.3rem; font-weight: 600; }
+    .skill-panel { padding: 26px; background: rgba(23,37,54,.62); border: 1px solid var(--line); border-radius: 18px; }
+    .skill-panel h3 { margin-bottom: 22px; }
+    .skill-list { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+    .skill-list li { display: grid; gap: 5px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .skill-list li:last-child { padding-bottom: 0; border-bottom: 0; }
+    .skill-list strong { font-size: .88rem; }
+    .skill-list span { color: var(--muted); font-size: .82rem; }
+
+    .page-rail {
+      position: fixed;
+      z-index: 10;
+      top: 50%;
+      right: 25px;
+      display: grid;
+      gap: 12px;
+      transform: translateY(-50%);
+    }
+
+    .rail-item {
+      position: relative;
+      display: block;
+      width: 28px;
+      height: 4px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-decoration: none;
+    }
+
+    .rail-item span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(206, 220, 228, .28);
+      transition: width .25s ease, background .25s ease, transform .25s ease;
+    }
+
+    .rail-item:hover span, .rail-item:focus-visible span { background: var(--blue); }
+    .rail-item.is-active span { width: 30px; background: var(--mint); }
+    .rail-item:focus-visible { outline: 2px solid var(--blue); outline-offset: 6px; border-radius: 4px; }
+
+    .rail-item::after {
+      content: attr(aria-label);
+      position: absolute;
+      right: 38px;
+      top: 50%;
+      padding: 5px 8px;
+      color: var(--text);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-50%) translateX(5px);
+      transition: opacity .2s ease, transform .2s ease;
+      white-space: nowrap;
+    }
+
+    .rail-item:hover::after, .rail-item:focus-visible::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+
+    @media (max-width: 900px) {
+      .page-section { padding: 72px 54px 76px; }
+      .page-section::before { left: 54px; }
+      .intro-grid, .future-grid { grid-template-columns: 1fr; gap: 38px; }
+      .growth-grid, .projects-grid { grid-template-columns: 1fr; }
+      .info-card, .project-card { min-height: auto; }
+    }
+
+    @media (max-width: 600px) {
+      .page-section { min-height: 100svh; padding: 68px 28px 62px; align-items: flex-start; }
+      .page-section::before { top: 28px; left: 28px; }
+      h1 { font-size: clamp(2.55rem, 12vw, 4.2rem); }
+      h2 { font-size: 2.2rem; }
+      .section-heading { display: block; }
+      .section-heading p { margin-top: -8px; }
+      .solutions-grid { grid-template-columns: 1fr; }
+      .career-block h3 { display: block; }
+      .career-block h3 span { display: block; margin-top: 6px; }
+      .page-rail { right: 12px; gap: 10px; }
+      .rail-item { width: 23px; }
+      .rail-item span { width: 18px; }
+      .rail-item.is-active span { width: 24px; }
+      .rail-item::after { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+
+    @media print {
+      html { scroll-snap-type: none; }
+      body { color: #111; background: #fff; }
+      .page-rail { display: none; }
+      .page-section { min-height: auto; padding: 36px; break-after: page; page-break-after: always; }
+      .page-section:last-child { break-after: auto; page-break-after: auto; }
+      .page-section::after { display: none; }
+      .profile-card, .info-card, .project-card, .solution-card, .skill-panel { color: #111; box-shadow: none; background: #fff; border-color: #ddd; }
+      .muted, .lead, .info-card p, .project-card p, .solution-card p, .career-block p, .future-copy p, .skill-list span { color: #444; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="page-rail" aria-label="페이지 위치">
+    <a class="rail-item is-active" href="#profile" data-section="profile" aria-label="01 Profile"><span></span></a>
+    <a class="rail-item" href="#projects" data-section="projects" aria-label="02 Projects"><span></span></a>
+    <a class="rail-item" href="#future" data-section="future" aria-label="03 Future"><span></span></a>
+  </nav>
+
+  <main>
+    <section class="page-section" id="profile" data-index="01 / PROFILE">
+      <div class="section-inner">
+        <div class="intro-grid">
+          <div>
+            <p class="eyebrow">Game Programmer · Server &amp; Client</p>
+            <h1>보이지 않는 곳의<br><span class="mint">안정성</span>으로<br>플레이어의 경험을 잇는<br>게임 프로그래머입니다.</h1>
+            <p class="lead">게임은 서로 다른 사람들이 같은 경험과 감정을 공유하게 만드는 매체라고 생각합니다. 플레이어의 행동, 클라이언트, 서버, 데이터가 정확히 연결되는 시스템을 만들고 그 경험을 안정적으로 구현하고 싶습니다.</p>
+          </div>
+
+          <aside class="profile-card">
+            <div class="card-label">PROFILE</div>
+            <h3>김한재</h3>
+            <p class="role">Game Programmer · Server &amp; Client</p>
+            <dl class="facts">
+              <div class="fact"><dt>Stack</dt><dd>C++ · C# · Unity</dd></div>
+              <div class="fact"><dt>Experience</dt><dd>Backend Developer · 1Y 2M</dd></div>
+              <div class="fact"><dt>Education</dt><dd>숭실대학교 컴퓨터학부 · 3.85 / 4.5</dd></div>
+            </dl>
+            <div class="link-row">
+              <a href="https://github.com/fanjae" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a href="https://fanjae.tistory.com" target="_blank" rel="noreferrer">Tistory ↗</a>
+              <a href="mailto:fanjae@naver.com">Email ↗</a>
+            </div>
+          </aside>
+        </div>
+
+        <div style="margin-top: 70px">
+          <div class="section-heading">
+            <div><p class="eyebrow">Foundation · Transition · Connection</p><h2>성장 과정</h2></div>
+            <p>웹 백엔드에서 배운 데이터의 흐름을 게임의 플레이 경험으로 연결했습니다.</p>
+          </div>
+          <div class="growth-grid">
+            <article class="info-card"><span class="index">01 / FOUNDATION</span><h3>데이터의 흐름을 이해하다</h3><p>웹 백엔드 개발을 통해 데이터의 전체 흐름과 문제의 근본 원인을 추적하는 접근법을 익혔습니다.</p></article>
+            <article class="info-card"><span class="index">02 / TRANSITION</span><h3>게임 프로그래머로 전환하다</h3><p>Unity 게임 개발 캠프에서 PixelKov와 IDLEAdventure를 제작하며 게임 시스템 개발 경험을 쌓았습니다.</p></article>
+            <article class="info-card"><span class="index">03 / CONNECTION</span><h3>플레이어 경험을 잇다</h3><p>플레이어의 행동, 클라이언트, 서버, 데이터가 정확히 연결되는 안정적인 시스템을 지향합니다.</p></article>
+          </div>
+          <div class="career-block">
+            <h3>TmaxGPMS <span>개발 경력</span></h3>
+            <p>기존 시스템의 데이터 흐름과 운영 환경을 파악하고, 인증·자동화·동기화와 관련된 기능을 개발했습니다.</p>
+            <div class="career-tags"><span class="tag">OAuth2 · JWT</span><span class="tag">Linux PAM</span><span class="tag">Python Agent</span><span class="tag">REST API</span><span class="tag">Master-Slave DB</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="projects" data-index="02 / PROJECTS">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div><p class="eyebrow">Selected Work</p><h2>대표 프로젝트</h2></div>
+          <p>게임의 상태와 데이터가 끊기지 않도록, 기능의 동작과 구조적인 문제를 함께 해결했습니다.</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-top"><div><h3>TwoFacedPoker</h3><p>2인용 온라인 카드 게임</p></div><span class="period">C++ · C#</span></div>
+            <p>방·턴·베팅·승패 상태를 관리하는 서버와 클라이언트를 구현하고, 패킷 경계와 송신 순서를 보장하도록 리팩토링했습니다.</p>
+            <div class="stack">SERVER / CLIENT / NETWORK</div>
+            <div class="link-row"><a href="https://github.com/fanjae/TwofacedPoker/tree/Refactor/PortfolioVer2" target="_blank" rel="noreferrer">Server ↗</a><a href="https://github.com/fanjae/TwofacedPoker_Client" target="_blank" rel="noreferrer">Client ↗</a><a href="https://fanjae.tistory.com/category/Projects/Two%20Faced%20Poker" target="_blank" rel="noreferrer">Devlog ↗</a></div>
+          </article>
+          <article class="project-card">
+            <div class="project-top"><div><h3>PixelKov</h3><p>Unity 게임 프로젝트</p></div><span class="period">Unity · C#</span></div>
+            <p>게임 개발 캠프에서 제작한 프로젝트로, Unity 기반의 플레이 흐름과 시스템 구현을 경험했습니다.</p>
+            <div class="stack">UNITY / GAMEPLAY / SYSTEM</div>
+            <div class="link-row"><a href="https://github.com/fanjae/Pixelkov/tree/refactor/Portpolio" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://fanjae.tistory.com/category/Projects/Pixelkov" target="_blank" rel="noreferrer">Devlog ↗</a></div>
+          </article>
+          <article class="project-card">
+            <div class="project-top"><div><h3>IDLEAdventure</h3><p>방치형 RPG 프로젝트</p></div><span class="period">Unity · C#</span></div>
+            <p>팀장 및 시스템 개발자로서 여러 게임 시스템의 상태를 통합하고, 저장·복원 구조를 설계했습니다.</p>
+            <div class="stack">SAVE SYSTEM / TEAM LEAD / UNITY</div>
+            <div class="link-row"><a href="https://github.com/fanjae/IDLEAdventure" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://fanjae.tistory.com/category/Projects/IDLEAdventure" target="_blank" rel="noreferrer">Devlog ↗</a></div>
+          </article>
+        </div>
+
+        <div style="margin-top: 62px">
+          <div class="section-heading"><div><p class="eyebrow">Problem Solving</p><h2>문제를 구조로 해결하다</h2></div><p>동작하는 코드에서 멈추지 않고 통신의 신뢰성과 데이터 일관성까지 살폈습니다.</p></div>
+          <div class="solutions-grid">
+            <article class="solution-card"><span class="solution-number">01 / NETWORK SERVER</span><h3>패킷 경계와 이벤트 순서를 보장</h3><p>TCP 스트림에서 메시지 경계가 보장되지 않는 문제를 확인하고 4바이트 길이 헤더와 <code>RecvAll()</code>·<code>SendAll()</code>을 적용했습니다. 연결별 송신 큐와 Sender Thread로 여러 Worker Thread의 송신 순서도 통제했습니다.</p></article>
+            <article class="solution-card"><span class="solution-number">02 / SAVE SYSTEM</span><h3>게임 상태의 일관성을 보장</h3><p><code>ISaveDataWriter</code>로 저장 책임을 시스템별로 분리하고, <code>GameSaveDataSnapshot</code>을 백그라운드에서 직렬화했습니다. 중첩 컬렉션까지 복사해 저장 중 원본 변경이 사본에 영향을 주지 않도록 했습니다.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="future" data-index="03 / FUTURE">
+      <div class="section-inner">
+        <div class="future-grid">
+          <div class="future-copy">
+            <p class="eyebrow">Collaboration · Direction</p>
+            <h2>핵심 시스템을<br><span class="mint">책임지는</span> 프로그래머</h2>
+            <p>팀원의 자율성을 존중하면서도 전체 진행 상황을 파악하고 필요한 순간에 조율합니다. IDLEAdventure에서는 데일리 스크럼으로 작업 충돌을 줄이고, 일정이 지연될 때 씬 연결과 시스템 통합을 맡아 핵심 기능의 완성을 도왔습니다.</p>
+            <p>입사 후에는 프로젝트의 코드 구조와 게임 플레이 흐름, 클라이언트와 서버 사이의 데이터 전달 과정을 빠르게 파악하겠습니다. 작은 기능 수정과 버그 재현·해결부터 정확히 수행하고, 이후에는 기능의 시작부터 실제 게임 반영까지 책임지겠습니다.</p>
+            <p class="closing">플레이어가 의도한 행동이 오류 없이 게임의 결과로 이어지도록, 보이지 않는 곳에서 게임의 안정성을 책임지겠습니다.</p>
+            <div class="link-row" style="margin-top: 30px"><a href="https://github.com/fanjae" target="_blank" rel="noreferrer">GitHub ↗</a><a href="mailto:fanjae@naver.com">Contact ↗</a></div>
+          </div>
+          <aside class="skill-panel">
+            <h3>Working principles</h3>
+            <ul class="skill-list">
+              <li><strong>Data Flow</strong><span>플레이어 행동부터 저장 데이터까지 흐름을 추적합니다.</span></li>
+              <li><strong>Reliability</strong><span>라이브러리의 보장 범위와 애플리케이션의 책임을 구분합니다.</span></li>
+              <li><strong>Ownership</strong><span>필요한 순간에는 업무 범위를 넓혀 결과물의 완성까지 책임집니다.</span></li>
+              <li><strong>Maintainability</strong><span>해결한 문제와 설계 의도를 팀과 공유해 유지보수성을 높입니다.</span></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const sections = [...document.querySelectorAll('.page-section')];
+      const railItems = [...document.querySelectorAll('.rail-item')];
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const setActive = (id) => {
+        railItems.forEach((item) => {
+          const active = item.dataset.section === id;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-current', active ? 'page' : 'false');
+        });
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      }, { threshold: [0.25, 0.5, 0.75], rootMargin: '-15% 0px -15% 0px' });
+
+      sections.forEach((section) => observer.observe(section));
+
+      railItems.forEach((item) => {
+        item.addEventListener('click', (event) => {
+          event.preventDefault();
+          const target = document.getElementById(item.dataset.section);
+          if (!target) return;
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          history.replaceState(null, '', `#${item.dataset.section}`);
+        });
+      });
+
+      const initialTarget = document.getElementById(window.location.hash.slice(1));
+      if (initialTarget) {
+        initialTarget.scrollIntoView({ behavior: 'auto', block: 'start' });
+        setActive(initialTarget.id);
+      }
+    })();
+  </script>
+</body>
+</html>
